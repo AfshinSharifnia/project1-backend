@@ -1,67 +1,104 @@
+import chalk from "chalk";
+
 import rl from "readline-sync";
 
-function compare(player1input, player2input) {
-  if (player1input === "rock") {
-    if (player2input === "rock") {
+const randomAnimals = ["lion", "wolf", "cat"];
+
+const getComputerChoice = (randomAnimals) => {
+  const Lenght = randomAnimals.length;
+
+  const randomIndex = Math.floor(Math.random() * Lenght);
+
+  return randomAnimals[randomIndex];
+};
+
+function compare(playerinput, computerinput) {
+  if (playerinput === "wolf") {
+    if (computerinput === "wolf") {
       return "draw";
-    } else if (player2input === "paper") {
-      return player2Name;
+    } else if (computerinput === "lion") {
+      return computerName;
     } else {
-      return player1Name;
+      return playerName;
     }
-  } else if (player1input === "paper") {
-    if (player2input === "rock") {
-      return player1Name;
-    } else if (player2input === "paper") {
+  } else if (playerinput === "lion") {
+    if (computerinput === "wolf") {
+      return playerName;
+    } else if (computerinput === "lion") {
       return "draw";
     } else {
-      return player2Name;
+      return playerName;
     }
   } else {
-    if (player2input === "rock") {
-      return player2Name;
-    } else if (player2input === "paper") {
-      return player1Name;
+    if (computerinput === "wolf") {
+      return computerName;
+    } else if (computerinput === "lion") {
+      return computerName;
     } else {
       return "draw";
     }
   }
 }
 
-console.log("Welcome to Rock,Paper,Scissors!");
+console.log(chalk.bgBlue.greenBright("Welcome to Animal Fight Game!"));
+console.log("\n");
 
-const player1Name = rl.question("What is Player 1's name? ");
+const playerName = rl.question("What is Player's name? ");
 
-console.log(`Hello ${player1Name}!`);
+console.log(`Hello ${playerName}!`);
 
-const player2Name = rl.question("What is Player 2's name? ");
+const computerName = rl.question("What is computer's name? ");
 
-console.log(`Hello ${player2Name}!`);
+console.log(`Hello ${computerName}!`);
 
-let player1Score = 0;
-let player2Score = 0;
+let playerScore = 0;
+
+let computerScore = 0;
 
 while (true) {
-  const player1input = rl.question("What is player 1's input? ");
-  const player2input = rl.question("What is player 2's input? ");
+  const playerinput = rl.question("What is player's choice? ");
 
-  const winner = compare(player1input, player2input);
+  // const computerChoice = rl.question("What is computer's input? ");
+
+  console.log("What is computer choice?");
+
+  let computerinput = getComputerChoice(randomAnimals);
+
+  console.log(computerinput);
+
+  const winner = compare(playerinput, computerinput);
 
   let winnerName;
 
-  if (winner === player1Name) {
-    player1Score = player1Score + 1; // player1Score++
-    winnerName = player1Name;
-  } else if (winner === player2Name) {
-    player2Score = player2Score + 1; //player2Score++
-    winnerName = player2Name;
+  if (winner === playerName) {
+    playerScore = playerScore + 1; // playerScore++
+    winnerName = playerName;
+  } else if (winner === computerName) {
+    computerScore = computerScore + 1; //computerScore++
+    winnerName = computerName;
   } else {
     console.log("Draw, please play again!");
-    continue; //Returns to the tart of the While loop
-    // break; ( Exits the loop)
   }
 
-  console.log(`The winner is ${winnerName}`);
-  console.log(`Player 1's score ${player1Score}`);
-  console.log(`Player 2's score ${player2Score}`);
+  console.log(`${playerName}'s score ${playerScore}`);
+  console.log(`${computerName}'s score ${computerScore}`);
+
+  //continue; //Returns to the start of the While loop
+  if (playerScore >= 3 || computerScore >= 3) {
+    break;
+  }
+}
+
+if (playerScore > computerScore) {
+  console.log(
+    `${playerName} is the winner of Animal Fight Game with ${playerScore} score.`
+  );
+} else if (playerScore < computerScore) {
+  console.log(
+    `${computerName} is the winner of Animal Fight Game with ${computerScore} score.`
+  );
+} else {
+  console.log(
+    `${playerName} and ${computerName} tie the Animal Fight Game with ${computerScore} score.`
+  );
 }
