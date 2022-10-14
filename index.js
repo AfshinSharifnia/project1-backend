@@ -8,7 +8,7 @@ import rl from "readline-sync";
 const randomAnimals = ["lion", "wolf", "cat"];
 
 const getComputerChoice = (randomAnimals) => {
-  const Lenght = randomAnimals.length;
+  const Lenght = randomAnimals.length;clear
 
   const randomIndex = Math.floor(Math.random() * Lenght);
 
