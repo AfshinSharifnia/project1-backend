@@ -1,14 +1,16 @@
-// import chalk from "chalk";
+import chalk from "chalk";
+
 import chalkAnimation from "chalk-animation";
 
-
 import rl from "readline-sync";
-// import font from "cfonts";
+
+import font from "cfonts";
 
 const randomAnimals = ["lion", "wolf", "cat"];
+const testAnimation = chalkAnimation.rainbow('Arash Sharifnia');
 
 const getComputerChoice = (randomAnimals) => {
-  const Lenght = randomAnimals.length;clear
+  const Lenght = randomAnimals.length;
 
   const randomIndex = Math.floor(Math.random() * Lenght);
 
@@ -43,7 +45,7 @@ function compare(playerinput, computerinput) {
   }
 }
 
-console.log(chalkAnimation, rainbow("Welcome to Animal Fight Game!"));
+console.log(chalk.bgGreen("Welcome to Animal Fight Game!"));
 
 console.log("\n");
 
