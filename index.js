@@ -1,13 +1,8 @@
 import chalk from "chalk";
 
-import chalkAnimation from "chalk-animation";
-
 import rl from "readline-sync";
 
-import font from "cfonts";
-
-const randomAnimals = ["lion", "wolf", "cat"];
-const testAnimation = chalkAnimation.rainbow('Arash Sharifnia');
+const animals = ["lion", "wolf", "cat", "mouse"];
 
 const getComputerChoice = (randomAnimals) => {
   const Lenght = randomAnimals.length;
@@ -18,57 +13,67 @@ const getComputerChoice = (randomAnimals) => {
 };
 
 function compare(playerinput, computerinput) {
-  if (playerinput === "wolf") {
-    if (computerinput === "wolf") {
-      return "draw";
+  if (playerinput === "lion") {
+    if (
+      computerinput === "wolf" ||
+      computerinput === "cat" ||
+      computerinput === "mouse"
+    ) {
+      return playerName;
+    } else {
+      return "Tie";
+    }
+  } else if (playerinput === "wolf") {
+    if (computerinput === "cat" || computerinput === "mouse") {
+      return playerName;
     } else if (computerinput === "lion") {
       return computerName;
     } else {
-      return playerName;
+      return "Tie";
     }
-  } else if (playerinput === "lion") {
-    if (computerinput === "wolf") {
+  } else if (playerinput === "cat") {
+    if (computerinput === "wolf" || computerinput === "lion") {
+      return computerName;
+    } else if (computerinput === "mouse") {
       return playerName;
-    } else if (computerinput === "lion") {
-      return "draw";
     } else {
-      return playerName;
+      return "Tie";
     }
   } else {
-    if (computerinput === "wolf") {
-      return computerName;
-    } else if (computerinput === "lion") {
+    if (
+      computerinput === "wolf" ||
+      computerinput === "cat" ||
+      computerinput === "lion"
+    ) {
       return computerName;
     } else {
-      return "draw";
+      return "Tie";
     }
   }
 }
 
-console.log(chalk.bgGreen("Welcome to Animal Fight Game!"));
-
-console.log("\n");
+console.log(chalk.cyanBright("Welcome to Animal Fight Game!"));
 
 const playerName = rl.question("What is Player's name? ");
 
-console.log(`Hello ${playerName}!`);
+console.log(chalk.bgCyan(`Hello ${playerName}`));
 
 const computerName = rl.question("What is computer's name? ");
 
-console.log(`Hello ${computerName}!`);
+console.log(chalk.bgCyan(`Hello ${computerName}`));
 
 let playerScore = 0;
 
 let computerScore = 0;
 
 while (true) {
-  const playerinput = rl.question("What is player's choice? ");
+  console.log(chalk.yellow(`Choose an animal : ${animals}`));
 
-  // const computerChoice = rl.question("What is computer's input? ");
+  const playerinput = rl.question(`What is ${playerName} choice? `);
 
-  console.log("What is computer choice?");
+  console.log(`What is ${computerName} choice? `);
 
-  let computerinput = getComputerChoice(randomAnimals);
+  let computerinput = getComputerChoice(animals);
 
   console.log(computerinput);
 
@@ -83,14 +88,14 @@ while (true) {
     computerScore = computerScore + 1; //computerScore++
     winnerName = computerName;
   } else {
-    console.log("Draw, please play again!");
+    console.log("Tie");
   }
 
   console.log(`${playerName}'s score ${playerScore}`);
   console.log(`${computerName}'s score ${computerScore}`);
 
-  //continue; //Returns to the start of the While loop
-  if (playerScore >= 3 || computerScore >= 3) {
+  //continue : Returns to the start of the While loop
+  if (playerScore >= 4 || computerScore >= 4) {
     break;
   }
 }
@@ -101,7 +106,9 @@ if (playerScore > computerScore) {
   );
 } else if (playerScore < computerScore) {
   console.log(
-    `${computerName} is the winner of Animal Fight Game with ${computerScore} score.`
+    chalk.bgGreenBright(
+      `${computerName} is the winner of Animal Fight Game with ${computerScore} score.`
+    )
   );
 } else {
   console.log(

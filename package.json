@@ -12,6 +12,7 @@
     "cfonts": "^3.1.1",
     "chalk": "^5.1.2",
     "chalk-animation": "^2.0.3",
+    "play-sound": "^1.1.5",
     "readline-sync": "^1.4.10"
   }
 }
