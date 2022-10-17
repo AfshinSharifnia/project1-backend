@@ -11,7 +11,7 @@ const getComputerChoice = (animals) => {
 
   return animals[randomIndex];
 };
-
+// comparing animals
 function getCompareInputs(playerinput, computerinput) {
   if (playerinput === "lion") {
     if (
@@ -59,20 +59,20 @@ console.log(chalk.cyanBright("Welcome to Animal Fight Game!"));
 
 const playerName = rl.question("What is Player's name? ");
 
-console.log(chalk.bgYellow(`Hello ${playerName}`));
+console.log(chalk.blue(`Hello ${playerName}`));
 
 const computerName = rl.question("What is computer's name? ");
 
-console.log(chalk.bgYellow(`Hello ${computerName}`));
+console.log(chalk.blue(`Hello ${computerName}`));
 
 while (true) {
   console.log(
-    chalk.yellow(`${playerName}, which animal do you choose: ${animals}`)
+    chalk.yellow(`${playerName}, please choose an animal: ${animals}`)
   );
 
   const playerinput = rl.question(`${playerName} choice is: `);
 
-  console.log(`${computerName} random choice is: `);
+  console.log(`${computerName} choice is: `);
 
   const computerinput = getComputerChoice(animals);
 
@@ -103,16 +103,16 @@ while (true) {
   }
 }
 
+// comparing scores
+
 if (playerScore > computerScore) {
   console.log(
-    chalk.bold.cyan(
-      `${playerName} is the winner of "Animal Fight Game" with ${playerScore} score.`
-    )
+    chalk.yellow(`${playerName} is the winner with ${playerScore} score.`)
   );
 } else if (playerScore < computerScore) {
   console.log(
-    chalk.bgGreenBright(
-      `${computerName} is the winner of Animal Fight Game with ${computerScore} score.`
+    chalk.yellow(
+      `${computerName} is the winner with ${computerScore} score.`
     )
   );
 } else {
