@@ -4,15 +4,15 @@ import rl from "readline-sync";
 
 const animals = ["lion", "wolf", "cat", "mouse"];
 
-const getComputerChoice = (randomAnimals) => {
-  const Lenght = randomAnimals.length;
+const getComputerChoice = (animals) => {
+  const Lenght = animals.length;
 
   const randomIndex = Math.floor(Math.random() * Lenght);
 
-  return randomAnimals[randomIndex];
+  return animals[randomIndex];
 };
 
-function compare(playerinput, computerinput) {
+function getCompareInputs(playerinput, computerinput) {
   if (playerinput === "lion") {
     if (
       computerinput === "wolf" ||
@@ -52,41 +52,44 @@ function compare(playerinput, computerinput) {
   }
 }
 
+let playerScore = 0;
+let computerScore = 0;
+
 console.log(chalk.cyanBright("Welcome to Animal Fight Game!"));
 
 const playerName = rl.question("What is Player's name? ");
 
-console.log(chalk.bgCyan(`Hello ${playerName}`));
+console.log(chalk.bgYellow(`Hello ${playerName}`));
 
 const computerName = rl.question("What is computer's name? ");
 
-console.log(chalk.bgCyan(`Hello ${computerName}`));
-
-let playerScore = 0;
-
-let computerScore = 0;
+console.log(chalk.bgYellow(`Hello ${computerName}`));
 
 while (true) {
-  console.log(chalk.yellow(`Choose an animal : ${animals}`));
+  console.log(
+    chalk.yellow(`${playerName}, which animal do you choose: ${animals}`)
+  );
 
-  const playerinput = rl.question(`What is ${playerName} choice? `);
+  const playerinput = rl.question(`${playerName} choice is: `);
 
-  console.log(`What is ${computerName} choice? `);
+  console.log(`${computerName} random choice is: `);
 
-  let computerinput = getComputerChoice(animals);
+  const computerinput = getComputerChoice(animals);
 
   console.log(computerinput);
 
-  const winner = compare(playerinput, computerinput);
+  const winner = getCompareInputs(playerinput, computerinput);
 
-  let winnerName;
+  let winnerName = "";
 
   if (winner === playerName) {
     playerScore = playerScore + 1; // playerScore++
     winnerName = playerName;
+    console.log(`Winner is "${winnerName}" `);
   } else if (winner === computerName) {
     computerScore = computerScore + 1; //computerScore++
     winnerName = computerName;
+    console.log(`Winner is "${winnerName}" `);
   } else {
     console.log("Tie");
   }
@@ -95,14 +98,16 @@ while (true) {
   console.log(`${computerName}'s score ${computerScore}`);
 
   //continue : Returns to the start of the While loop
-  if (playerScore >= 4 || computerScore >= 4) {
+  if (playerScore >= 2 || computerScore >= 2) {
     break;
   }
 }
 
 if (playerScore > computerScore) {
   console.log(
-    `${playerName} is the winner of Animal Fight Game with ${playerScore} score.`
+    chalk.bold.cyan(
+      `${playerName} is the winner of "Animal Fight Game" with ${playerScore} score.`
+    )
   );
 } else if (playerScore < computerScore) {
   console.log(
