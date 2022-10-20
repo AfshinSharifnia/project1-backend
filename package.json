@@ -1,17 +1,20 @@
 {
-  "name": "rock-paper-scissors",
+  "name": "animal-fight-game",
   "version": "0.1.0",
-  "description": "Rock,paper,scissors terminal game",
+  "description": "animal-fight-terminal game",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js ",
+    "ListFiles": " ls -al"
   },
   "author": "Afshin Sharifnia",
   "dependencies": {
     "cfonts": "^3.1.1",
     "chalk": "^5.1.2",
     "chalk-animation": "^2.0.3",
+    "express": "^4.18.2",
     "play-sound": "^1.1.5",
     "readline-sync": "^1.4.10"
   }

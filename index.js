@@ -5,9 +5,11 @@ import { getComputerChoice } from "./getComputerChoice.js";
 
 console.log(chalk.cyanBright("Welcome to Animal Fight Game!"));
 
-export const playerName = rl.question("What is Player's name? ");
+
+export const playerName = rl.question(`What is Player's name?`);
 
 console.log(chalk.yellow(`Hello ${playerName}`));
+
 
 export const computerName = rl.question("What is computer's name? ");
 
@@ -18,6 +20,7 @@ const animals = ["lion", "wolf", "cat", "mouse"];
 // Winner function
 
 let playerScore = 0;
+
 let computerScore = 0;
 
 while (true) {
@@ -35,7 +38,7 @@ while (true) {
 
   const winner = getCompareInputs(playerinput, computerinput);
 
-  let winnerName = "";
+  let winnerName;
 
   if (winner === playerName) {
     playerScore = playerScore + 1; // playerScore++
@@ -56,6 +59,7 @@ while (true) {
     break;
   }
 }
+
 // const winners = [];
 
 // winners.push(
