@@ -1,4 +1,7 @@
-import express, { request, response } from "express";
+// import { createSupportsColor } from "chalk/source/vendor/supports-color/index.js";
+
+import express, { response } from "express";
+
 import { getCompareInputs } from "./getCompareInputs.js";
 
 import { getComputerChoice } from "./getComputerChoice.js";
@@ -19,11 +22,15 @@ let playerinput;
 
 let computerinput;
 
+let winnerName;
+
 let playerScore = 0;
 
 let computerScore = 0;
 
-let gameRules = [
+// Game rules and player name input
+app.get("/", (request, response) => {
+  response.send(`Please find below the game steps:
   "1.Enter playername",
   "2.Enter computer name",
   "3.Enter an animal name from the list",
@@ -31,20 +38,13 @@ let gameRules = [
   "5.The winner of the round is displayed.",
   "6.The game is finished after five rounds.",
   "7.The Winner of the game with total score is being displayed",
-];
-
-// Game rules and player name input
-app.get("/", (request, response) => {
-  const playerName = request.query.name;
-
-  response.send(`Please find below the game steps:
-  ${gameRules};
   `);
 });
 
-// Player name display / compter name input
 app.get("/playerName", (request, response) => {
-  let playerName = request.query.name;
+  playerName = request.query.name;
+
+
 
   response.send(`Welcome ${playerName}, what is your computer name? send it to http://localhost:4004/computerName?name= 
   
@@ -52,16 +52,18 @@ app.get("/playerName", (request, response) => {
 });
 
 app.get("/computerName", (request, response) => {
-  const computerName = request.query.name;
+  computerName = request.query.name;
+
 
   response.send(`${computerName} is ready to fight!
-  Now it's time for the player to choose an animal here: http://localhost:4004/playerinput?name=
+  Choose an animal here: http://localhost:4004/playerinput?name=
   
   `);
 });
 
 app.get("/playerinput", (request, response) => {
-  const playerinput = request.query.name;
+  playerinput = request.query.name;
+
 
   response.send(`What is player's choice? send one of this animal : ${animals}, 
   
@@ -70,17 +72,45 @@ app.get("/playerinput", (request, response) => {
 });
 
 app.get("/computerChoice", (request, response) => {
+  computerinput = getComputerChoice(animals);
   
-  const computerinput = getComputerChoice(animals);
-
-  response.send(`Computer choise is: ${computerinput}`);
+  response.send(
+    `Computer choise is: ${computerinput}.
+    Click this link to see the winner http://localhost:4004/winner`
+  );
 });
 
-app.get("/compareInputs", (request, response) => {
+app.get("/winner", (request, response) => {
+  
+  winnerName = getCompareInputs(playerinput, computerinput);
+ 
 
-  const compareResult = getCompareInputs(playerinput, computerinput);
+  if (winnerName === "player") {
+    playerScore = playerScore + 1; // playerScore++
+    winnerName = playerName;
 
-  response.send(`Computer choise is: ${compareResult}`);
+    response.send(`Winner is "${winnerName}", score is ${playerScore} `);
+  } else if (winnerName === "computer") {
+    computerScore = computerScore + 1; //computerScore++
+    winnerName = computerName;
+    response.send(`Winner is "${winnerName}", score is ${computerScore} `);
+  } else {
+    response.send("Tie");
+  }
+
+  // response.send(`${playerName}'s score ${playerScore}`);
+
+  // response.send(`${computerName}'s score ${computerScore}`);
+
+  // if (playerScore > computerScore) {
+  //   response.send(`${playerName} is the winner with ${playerScore} score.`);
+  // } else if (playerScore < computerScore) {
+  //   response.send(`${computerName} is the winner with ${computerScore} score.`);
+  // } else {
+  //   response.send(
+  //     `${playerName} and ${computerName} tie the Animal Fight Game with ${computerScore} score.`
+  //   );
+  // }
 });
 
 app.listen(PORT, () => {
