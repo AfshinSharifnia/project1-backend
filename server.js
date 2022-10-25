@@ -2,6 +2,8 @@
 
 import express, { response } from "express";
 
+import { getanimalsList } from "./getanimalsList.js";
+
 import { getCompareInputs } from "./getCompareInputs.js";
 
 import { getComputerChoice } from "./getComputerChoice.js";
@@ -9,8 +11,6 @@ import { getComputerChoice } from "./getComputerChoice.js";
 const app = express();
 
 const PORT = 4004;
-
-const animals = ["lion", "wolf", "cat", "mouse"];
 
 app.use = express.json();
 
@@ -28,89 +28,97 @@ let playerScore = 0;
 
 let computerScore = 0;
 
+let animalList;
+
+let animals = [
+  { name: "lion" },
+  { name: "wolf" },
+  { name: "cat" },
+  { name: "mouse" },
+  { name: "elephant" },
+];
+
 // Game rules and player name input
 app.get("/", (request, response) => {
   response.send(`Please find below the game steps:
+
   "1.Enter playername",
-  "2.Enter computer name",
-  "3.Enter an animal name from the list",
-  "4.Computer selects an animal randomly and fights with your animal.",
-  "5.The winner of the round is displayed.",
-  "6.The game is finished after five rounds.",
-  "7.The Winner of the game with total score is being displayed",
+  "2.Enter an animal name from the list",
+  "3.Computer selects an animal randomly and fights with your animal.",
+  "4.The winner of the round is displayed.",
+  "5.The game is finished after five rounds.",
+  "6.The Winner of the game with total score is being displayed",
+  "7.Do you think elephants are afraid of mice? Give it a try!"
   `);
 });
 
 app.get("/playerName", (request, response) => {
   playerName = request.query.name;
 
+  response.send(`Hello ${playerName},Welcome to the "Animals fight game"
 
-
-  response.send(`Welcome ${playerName}, what is your computer name? send it to http://localhost:4004/computerName?name= 
+   Next step ==>  http://localhost:4004/computer
   
   `);
 });
 
-app.get("/computerName", (request, response) => {
-  computerName = request.query.name;
+app.get("/computer", (request, response) => {
+  computerName = "Computer";
 
-
-  response.send(`${computerName} is ready to fight!
-  Choose an animal here: http://localhost:4004/playerinput?name=
+  response.send(`"Computer" is about to fight.
+  Please see the animals list here => http://localhost:4004/animalsList
+  
   
   `);
 });
 
-app.get("/playerinput", (request, response) => {
+app.get("/animalsList", (request, response) => {
+  animalList = getanimalsList(animals);
+
+  response.send(`To choose an animal, go to ==> http://localhost:4004/playerChoice
+
+   ${animalList}`);push
+});
+
+app.get("/playerChoice", (request, response) => {
+  animalList = getanimalsList(animals);
+
   playerinput = request.query.name;
 
+  response.send(`Which animal would be your choice? 
+    ${animalList}
+  Thanks! you chose "${playerinput}"
 
-  response.send(`What is player's choice? send one of this animal : ${animals}, 
-  
-  Awesome! your choise is: ${playerinput}
-  Now it's time for the computer to choose an animal here http://localhost:4004/computerchoice`);
+  Go to the next step and see what would be the computer choice==> http://localhost:4004/computerchoice`);
 });
 
 app.get("/computerChoice", (request, response) => {
   computerinput = getComputerChoice(animals);
-  
+
   response.send(
-    `Computer choise is: ${computerinput}.
-    Click this link to see the winner http://localhost:4004/winner`
+    `Computer choice is "${computerinput}"
+
+    The winner is http://localhost:4004/winner`
   );
 });
 
 app.get("/winner", (request, response) => {
-  
   winnerName = getCompareInputs(playerinput, computerinput);
- 
 
   if (winnerName === "player") {
     playerScore = playerScore + 1; // playerScore++
     winnerName = playerName;
 
-    response.send(`Winner is "${winnerName}", score is ${playerScore} `);
+    response.send(`The winner is "${winnerName}", score is = ${playerScore} `);
   } else if (winnerName === "computer") {
     computerScore = computerScore + 1; //computerScore++
     winnerName = computerName;
-    response.send(`Winner is "${winnerName}", score is ${computerScore} `);
+    response.send(
+      `The winner is "${winnerName}", score is = ${computerScore} `
+    );
   } else {
-    response.send("Tie");
+    response.send("The game is tied");
   }
-
-  // response.send(`${playerName}'s score ${playerScore}`);
-
-  // response.send(`${computerName}'s score ${computerScore}`);
-
-  // if (playerScore > computerScore) {
-  //   response.send(`${playerName} is the winner with ${playerScore} score.`);
-  // } else if (playerScore < computerScore) {
-  //   response.send(`${computerName} is the winner with ${computerScore} score.`);
-  // } else {
-  //   response.send(
-  //     `${playerName} and ${computerName} tie the Animal Fight Game with ${computerScore} score.`
-  //   );
-  // }
 });
 
 app.listen(PORT, () => {

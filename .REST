@@ -1,2 +1,14 @@
 GET http://localhost:4004/
+###
+GET http://localhost:4004/animalList
+###
+GET http://localhost:4004/playerName
+###
+GET http://localhost:4004/computerName
+###
+GET http://localhost:4004/playerinput
+###
+Get http://localhost:4004/computerChoice
+
+
 

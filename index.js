@@ -1,3 +1,36 @@
+
+  const animals = [
+    { name: "lion" },
+    { name: "wolf" },
+    { name: "cat" },
+    { name: "mouse" },
+    { name: "elephant" },
+  ];
+
+  const getanimalsList = (animals) => {
+
+    for (const animal of animals) {
+
+      console.log(animal.name);
+    }
+
+  };
+getanimalsList(animals)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import chalk from "chalk";
 
 // import rl from "readline-sync";
@@ -26,22 +59,22 @@
 
 // while (true) {
 
-  // console.log(
+// console.log(
 
-  //   chalk.yellow(`${playerName}, please choose an animal: ${animals}`)
-  // );
+//   chalk.yellow(`${playerName}, please choose an animal: ${animals}`)
+// );
 
-  // const playerinput = rl.question(`${playerName} choice is: `);
+// const playerinput = rl.question(`${playerName} choice is: `);
 
-  // console.log(`${computerName} choice is: `);
+// console.log(`${computerName} choice is: `);
 
-  // const computerinput = getComputerChoice(animals);
+// const computerinput = getComputerChoice(animals);
 
-  // console.log(computerinput);
+// console.log(computerinput);
 
-  // const winner = getCompareInputs(playerinput, computerinput);
+// const winner = getCompareInputs(playerinput, computerinput);
 
-  // let winnerName;
+// let winnerName;
 // while (true) {
 //   if (winner === playerName) {
 //     playerScore = playerScore + 1; // playerScore++
@@ -85,3 +118,17 @@
 //   { score: playerScore, computerScore }
 // );
 // console.log(winners);
+
+// response.send(`${playerName}'s score ${playerScore}`);
+
+// response.send(`${computerName}'s score ${computerScore}`);
+
+// if (playerScore > computerScore) {
+//   response.send(`${playerName} is the winner with ${playerScore} score.`);
+// } else if (playerScore < computerScore) {
+//   response.send(`${computerName} is the winner with ${computerScore} score.`);
+// } else {
+//   response.send(
+//     `${playerName} and ${computerName} tie the Animal Fight Game with ${computerScore} score.`
+//   );
+// }

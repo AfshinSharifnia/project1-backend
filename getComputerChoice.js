@@ -2,9 +2,9 @@
 
 export const getComputerChoice = (animals) => {
 
-  const Lenght = animals.length;
+  const Length = animals.length;
 
-  const randomIndex = Math.floor(Math.random() * Lenght);
+  const randomIndex = Math.floor(Math.random() * Length);
 
-  return animals[randomIndex];
+  return animals[randomIndex].name;
 };
