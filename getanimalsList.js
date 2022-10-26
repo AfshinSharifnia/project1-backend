@@ -1,10 +1,5 @@
-let animals = [
-  { name: "lion" },
-  { name: "wolf" },
-  { name: "cat" },
-  { name: "mouse" },
-  { name: "elephant" },
-];
+import { animals } from "./server.js";
+
 export const getanimalsList = (animals) => {
   let result = "";
   for (const animal of animals) {

@@ -1,13 +1,6 @@
-import { getRawInput } from "readline-sync";
 
-// import { animals } from "./server.js";
-let animals = [
-  { name: "lion" },
-  { name: "wolf" },
-  { name: "cat" },
-  { name: "mouse" },
-  { name: "elephant" },
-];
+import { animals } from "./server.js";
+
 
 export const getInputCheck = (playerinput) => {
   let checked = false;

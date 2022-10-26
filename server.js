@@ -18,7 +18,7 @@ app.use = express.json();
 
 let playerName;
 
-let computerName;
+let computerName="Computer"
 
 let playerinput;
 
@@ -42,7 +42,8 @@ export let animals = [
 
 // Game rules and player name input
 app.get("/", (request, response) => {
-  response.send(`Game steps:
+
+  response.send(`𝐆𝐚𝐦𝐞 𝐬𝐭𝐞𝐩𝐬 :
   1.Enter player name
   2.Choose an animal from the list
   3.Computer will choose an animal randomly.
@@ -50,7 +51,7 @@ app.get("/", (request, response) => {
 
 Problem to solve :"Which animals are afraid of mice? Let's play and find out!"
 
-  Please enter the player name here => http://localhost:4004/playerName?name=
+  Click http://localhost:4004/playerName?name= to start the game
   `);
 });
 
@@ -58,7 +59,7 @@ app.get("/playerName", (request, response) => {
 
   playerName = request.query.name;
 
-  response.send(`Hello ${playerName}, 𝕎𝕖𝕝𝕔𝕠𝕞𝕖 𝕥𝕠 𝕥𝕙𝕖 "𝔸𝕟𝕚𝕞𝕒𝕝𝕤 𝕗𝕚𝕘𝕙𝕥 𝕘𝕒𝕞𝕖"
+  response.send(`Hello ${playerName}, 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐭𝐡e "𝐀𝐧𝐢𝐦𝐚𝐥𝐬 𝐅𝐢𝐠𝐡𝐭 𝐆𝐚𝐦𝐞"
 
   click http://localhost:4004/animalsList to see the animals list
    
@@ -100,12 +101,13 @@ app.get("/playerChoice", (request, response) => {
   } 
   else {
     response.send(
-      `"${playerinput}" is a wrong choice, please choose an animal from the animal list!`
+      `"${playerinput}" is a wrong choice, please choose from the animal list!`
     );
   }
 });
 
 app.get("/computerChoice", (request, response) => {
+  
   computerinput = getComputerChoice(animals);
 
   response.send(
