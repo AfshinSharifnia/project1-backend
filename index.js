@@ -18,7 +18,20 @@
 getanimalsList(animals)
 
 
+const getInputCheck = (playerinput) => {
+  let checked = false;
 
+  for (const animal of animals) {
+    if (animal.name === playerinput) {
+      checked = true;
+      break;
+    }
+  }
+
+  if (checked == false) {
+    console.log("The player input is invalid.");
+  }
+};
 
 
 
