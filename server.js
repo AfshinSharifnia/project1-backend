@@ -1,6 +1,38 @@
 // import { createSupportsColor } from "chalk/source/vendor/supports-color/index.js";
 
-import express, { response } from "express";
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+async function main() {
+  console.log(process.env.MONGODB_DBNAME);
+  //connect to db in cloud
+  await mongoose.connect(process.env.MONGODB_URI, {
+    dbName: process.env.Cohort9,
+    user: process.env.MONGODB_USER,
+    pass: process.env.MONGODB_PASSWORD,
+  });
+  console.log(`MongoDB is connected to ${process.env.MONGODB_DBNAME}`);
+
+  // create person schema
+  const personSchema = mongoose.Schema({
+    firstName: String,
+    lastName: String,
+    age: Number,
+  });
+
+  //create Person Model
+  const Person = mongoose.model("Person", personSchema);
+  const afshin = new Person({
+    firstName: "Afshin",
+    lastName: "Sharifnia",
+    age: 55,
+  });
+  await afshin.save();
+}
+main().catch((err) => console.error(err));
 
 import { getanimalsList } from "./getanimalsList.js";
 
@@ -11,14 +43,15 @@ import { getComputerChoice } from "./getComputerChoice.js";
 import { getInputCheck } from "./getInputCheck.js";
 
 const app = express();
-
 const PORT = 4004;
-
+app.listen(PORT, () => {
+  console.log(`Listening on ${PORT}`);
+});
 app.use = express.json();
 
 let playerName;
 
-let computerName="Computer"
+let computerName = "Computer";
 
 let playerinput;
 
@@ -42,7 +75,6 @@ export let animals = [
 
 // Game rules and player name input
 app.get("/", (request, response) => {
-
   response.send(`𝐆𝐚𝐦𝐞 𝐬𝐭𝐞𝐩𝐬 :
   1.Enter player name
   2.Choose an animal from the list
@@ -56,7 +88,6 @@ Problem to solve :"Which animals are afraid of mice? Let's play and find out!"
 });
 
 app.get("/playerName", (request, response) => {
-
   playerName = request.query.name;
 
   response.send(`Hello ${playerName}, 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐭𝐡e "𝐀𝐧𝐢𝐦𝐚𝐥𝐬 𝐅𝐢𝐠𝐡𝐭 𝐆𝐚𝐦𝐞"
@@ -67,18 +98,7 @@ app.get("/playerName", (request, response) => {
   `);
 });
 
-// app.get("/computer", (request, response) => {
-//   computerName = "Computer";
-
-//   response.send(`"Computer" is about to fight.
-//   Please see the animals list here => http://localhost:4004/animalsList
-  
-  
-//   `);
-// });
-
 app.get("/animalsList", (request, response) => {
-
   animalList = getanimalsList(animals);
 
   response.send(`click http://localhost:4004/playerChoice?name= and choose one of the below animals:
@@ -87,8 +107,6 @@ app.get("/animalsList", (request, response) => {
 });
 
 app.get("/playerChoice", (request, response) => {
-
-
   playerinput = request.query.name;
 
   let playerChoice = getInputCheck(playerinput.toLowerCase());
@@ -98,8 +116,7 @@ app.get("/playerChoice", (request, response) => {
 
     Click http://localhost:4004/computerChoice to see the computer choice.
     `);
-  } 
-  else {
+  } else {
     response.send(
       `"${playerinput}" is a wrong choice, please choose from the animal list!`
     );
@@ -107,13 +124,13 @@ app.get("/playerChoice", (request, response) => {
 });
 
 app.get("/computerChoice", (request, response) => {
-  
   computerinput = getComputerChoice(animals);
 
   response.send(
     `Computer choice is "${computerinput}"
 
-    Click  http://localhost:4004/winner to see the winner!`);
+    Click  http://localhost:4004/winner to see the winner!`
+  );
 });
 
 app.get("/winner", (request, response) => {
@@ -123,7 +140,9 @@ app.get("/winner", (request, response) => {
     playerScore = playerScore + 1; // playerScore++
     winnerName = playerName;
 
-    response.send(`The winner is "${winnerName}", Total score is = ${playerScore} `);
+    response.send(
+      `The winner is "${winnerName}", Total score is = ${playerScore} `
+    );
   } else if (winnerName === "computer") {
     computerScore = computerScore + 1; //computerScore++
     winnerName = computerName;
@@ -133,8 +152,4 @@ app.get("/winner", (request, response) => {
   } else {
     response.send("The game is tied");
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}`);
 });
