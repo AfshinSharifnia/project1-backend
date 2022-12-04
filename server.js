@@ -23,7 +23,7 @@ async function main() {
     age: Number,
   });
 
-  //create Person Model
+  //create Person schema
   const Person = mongoose.model("Person", personSchema);
   const afshin = new Person({
     firstName: "Afshin",
@@ -31,6 +31,9 @@ async function main() {
     age: 55,
   });
   await afshin.save();
+  //Saved afshin
+
+  await Person.findByIdAndUpdate("638cfc1810dadd673096f783", { age: 45, firstName:"Azadeh", lastName:"H" });
 }
 main().catch((err) => console.error(err));
 
