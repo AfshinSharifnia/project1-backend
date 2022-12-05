@@ -31,9 +31,12 @@ async function main() {
     age: 55,
   });
   await afshin.save();
-  //Saved afshin
-
-  await Person.findByIdAndUpdate("638cfc1810dadd673096f783", { age: 45, firstName:"Azadeh", lastName:"H" });
+  
+  await Person.findByIdAndUpdate("638cfc1810dadd673096f783", {
+    age: 45,
+    firstName: "Azadeh",
+    lastName: "H",
+  });
 }
 main().catch((err) => console.error(err));
 
@@ -45,8 +48,11 @@ import { getComputerChoice } from "./getComputerChoice.js";
 
 import { getInputCheck } from "./getInputCheck.js";
 
+
+
 const app = express();
-const PORT = 4004;
+app.use(express.json());
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
