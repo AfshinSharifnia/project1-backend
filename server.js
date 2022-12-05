@@ -23,7 +23,7 @@ async function main() {
     age: Number,
   });
 
-  //create Person schema
+  //create Model based on the Person schema
   const Person = mongoose.model("Person", personSchema);
   const afshin = new Person({
     firstName: "Afshin",
