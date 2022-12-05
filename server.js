@@ -1,54 +1,20 @@
-// import { createSupportsColor } from "chalk/source/vendor/supports-color/index.js";
-
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
 dotenv.config();
 
+// Connect to MongoDB
+
 async function main() {
-  console.log(process.env.MONGODB_DBNAME);
-  //connect to db in cloud
   await mongoose.connect(process.env.MONGODB_URI, {
     dbName: process.env.Cohort9,
     user: process.env.MONGODB_USER,
     pass: process.env.MONGODB_PASSWORD,
   });
   console.log(`MongoDB is connected to ${process.env.MONGODB_DBNAME}`);
-
-  // create person schema
-  const personSchema = mongoose.Schema({
-    firstName: String,
-    lastName: String,
-    age: Number,
-  });
-
-  //create Model based on the Person schema
-  const Person = mongoose.model("Person", personSchema);
-  const afshin = new Person({
-    firstName: "Afshin",
-    lastName: "Sharifnia",
-    age: 55,
-  });
-  await afshin.save();
-  
-  await Person.findByIdAndUpdate("638cfc1810dadd673096f783", {
-    age: 45,
-    firstName: "Azadeh",
-    lastName: "H",
-  });
 }
+
 main().catch((err) => console.error(err));
-
-import { getanimalsList } from "./getanimalsList.js";
-
-import { getCompareInputs } from "./getCompareInputs.js";
-
-import { getComputerChoice } from "./getComputerChoice.js";
-
-import { getInputCheck } from "./getInputCheck.js";
-
-
 
 const app = express();
 app.use(express.json());
@@ -57,6 +23,15 @@ app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
 app.use = express.json();
+
+import { getanimalsList } from "./getanimalsList.js";
+
+import { getCompareInputs } from "./getCompareInputs.js";
+
+import { getComputerChoice } from "./getComputerChoice.js";
+
+import { getInputCheck } from "./getInputCheck.js";
+import { createAnimal } from "./db/animalModel.js";
 
 let playerName;
 
@@ -107,12 +82,19 @@ app.get("/playerName", (request, response) => {
   `);
 });
 
-app.get("/animalsList", (request, response) => {
-  animalList = getanimalsList(animals);
+app.get("/animalsList", async (request, response) => {
+  animalList = await getanimalsList(animals);
 
   response.send(`click http://localhost:4004/playerChoice?name= and choose one of the below animals:
 
    ${animalList}`);
+});
+
+app.post("/animalsList", async (request, response) => {
+  const animal = request.body;
+  await createAnimal(animal);
+
+  response.send();
 });
 
 app.get("/playerChoice", (request, response) => {
